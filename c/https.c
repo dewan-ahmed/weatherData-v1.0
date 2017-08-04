@@ -25,17 +25,46 @@
  */ 
 #include <stdio.h>
 #include "curl/curl.h"
- 
+#include <string.h>
+
+struct city {
+  char name[25];
+  char id[8];
+};
+
 int main(void)
 {
   CURL *curl;
   CURLcode res;
- 
+  char URL[150] = "http://api.openweathermap.org/data/2.5/weather?id=";
+  char APIKEY[40] = "&APPID=658dcef74a3b2000ef91dfa9bb5db5d6";
+  struct city Toronto;
+  struct city Dhaka;
+  struct city Capetown;
+  struct city Perth;
+  struct city NewYork;
+  struct city Dubai;  
   curl_global_init(CURL_GLOBAL_DEFAULT);
- 
   curl = curl_easy_init();
+ 
+  strcpy(Toronto.name, "Toronto");
+  strcpy(Toronto.id, "6167865");
+  strcpy(Dhaka.name, "Dhaka");
+  strcpy(Dhaka.id, "1185241");
+  strcpy(Capetown.name, "Capetown");
+  strcpy(Capetown.id, "1185241");
+  strcpy(Perth.name, "Perth");
+  strcpy(Perth.id, "1185241");
+  strcpy(NewYork.name, "New York");
+  strcpy(NewYork.id, "1185241");
+  strcpy(Dubai.name, "Dubai");
+  strcpy(Dubai.id, "1185241");
+
+  strcat(URL, Dhaka.id);
+  strcat(URL, APIKEY);
+
   if(curl) {
-    curl_easy_setopt(curl, CURLOPT_URL, "http://api.openweathermap.org/data/2.5/weather?id=1566083&APPID=658dcef74a3b2000ef91dfa9bb5db5d6");
+    curl_easy_setopt(curl, CURLOPT_URL, URL);
  
 #ifdef SKIP_PEER_VERIFICATION
     /*
